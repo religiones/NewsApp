@@ -99,7 +99,7 @@ class news extends Component<any, newsState> {
                                 <Card title="新 闻 列 表" headStyle={{fontSize: "20px", fontWeight:"600"}} bordered={false} >
                                     {
                                         newsList.map((item, key)=>{
-                                            return <NewsCard ctime={item["ctime"]} title={item["title"]} description={item["description"]} picUrl={item["picUrl"]} source={item["source"]} ></NewsCard>
+                                            return <NewsCard key={key} ctime={item["ctime"]} title={item["title"]} description={item["description"]} picUrl={item["picUrl"]} source={item["source"]} ></NewsCard>
                                         })
                                     }
                                 </Card>

@@ -120,7 +120,6 @@ class User extends Component<any, userState> {
                                                 更改信息
                                             </Button>
                                             <Button style={{ width: "40%", marginLeft: "10%" }} onClick={()=>{
-                                                localStorage.removeItem("username");
                                                 RedirectToLogin();
                                             }}>
                                                 退出登录

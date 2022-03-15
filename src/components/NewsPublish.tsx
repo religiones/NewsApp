@@ -91,7 +91,7 @@ class newsPublish extends Component<any, newsPublisState> {
                                             <Form.Item label="新闻内容"  name="newsContent" rules={[{required: true, message: "内容不能为空!"}]}>
                                                 <TextArea showCount maxLength={300} style={{height: 300}} placeholder='请输入新闻内容'/>
                                             </Form.Item>
-                                            <Form.Item name="newsPic">
+                                            <Form.Item name="newsPic" label="图片不宜超过1mb...">
                                                 <Upload maxCount={1} listType="picture" style={{float:"left", width:"200px",marginRight:"8px"}}>
                                                     <Button icon={<UploadOutlined/>}>上传图片</Button>    
                                                 </Upload>
