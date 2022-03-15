@@ -79,7 +79,7 @@ class news extends Component<any, newsState> {
                     <Header className="header" style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
                         <Row>
                             <Col span={6}>
-                                <div className="logo">Logo</div>
+                                <div className="logo">News</div>
                             </Col>
                             <Col span={6} offset={12}>
                                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['home']} onClick={(item)=>{

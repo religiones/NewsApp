@@ -3,7 +3,8 @@ import { UploadOutlined } from '@ant-design/icons';
 import TextArea from 'antd/lib/input/TextArea';
 import { Content, Footer, Header } from 'antd/lib/layout/layout';
 import React, {Component} from 'react'
-import { ChangeRouter, RedirectToHome} from '../api/router';
+import { ChangeRouter, openNotification, RedirectToHome} from '../api/router';
+import { MehOutlined, SmileOutlined } from '@ant-design/icons';
 import axios from 'axios'
 
 type newsPublisState = {
@@ -28,7 +29,7 @@ class newsPublish extends Component<any, newsPublisState> {
 
     onFinish = (values: any) => {
         console.log(values);
-        const time = `${new Date().getFullYear()}/${new Date().getDate()}/${new Date().getDay()}`;
+        const time = `${new Date().getFullYear()}/${new Date().getMonth()+1}/${new Date().getDate()}`;
         const news = {
             ctime: time,
             title: values["newsTitle"],
@@ -41,7 +42,15 @@ class newsPublish extends Component<any, newsPublisState> {
         axios.post('/api/addNews',formData,{
             headers:{'Content-Type':'multipart/form-data;charset=UTF-8'}
         }).then(res=>{
-            RedirectToHome();
+            if(res["data"] === "OK"){
+                openNotification("提交成功","正在跳转...",<SmileOutlined style={{color:"rgb(135, 208, 104)"}}/>);
+                setTimeout(()=>{
+                    RedirectToHome();
+                },800);
+            }else{
+                openNotification("提交失败","服务异常...",<MehOutlined style={{color:"#f4364c"}}/>)
+            }
+            
         }).catch(err=>{
             console.log(err);
         });

@@ -1,8 +1,8 @@
 import { Button, Card, Col, DatePicker, Form, FormInstance, Input, Row, Select } from 'antd';
 import React, { Component } from 'react'
 import { addUser } from '../api/userApi'
-import { RedirectToHome, RedirectToLogin} from '../api/router'
-
+import { openNotification, RedirectToHome, RedirectToLogin} from '../api/router'
+import { MehOutlined, SmileOutlined } from '@ant-design/icons';
 type registerState = {
     username: string,
     password: string,
@@ -20,10 +20,13 @@ class register extends Component<any, registerState> {
         if (values["password"] === values["password_confirm"]) {
             let res = await addUser(values["username"],values["password"],values["phone"],birth);
             if (res === "OK") {
-               RedirectToHome();
-               localStorage.setItem("username", values["username"]);
+                openNotification("注册成功","欢迎来到News",<SmileOutlined style={{color:"rgb(135, 208, 104)"}}/>)
+                localStorage.setItem("username", values["username"]);
+                setTimeout(()=>{
+                    RedirectToHome();
+                },800);
             } else {
-                console.log("register failed");
+                openNotification("注册失败","请等待...",<MehOutlined style={{color:"#f4364c"}}/>)
             }
         } else {
             console.log("password error");

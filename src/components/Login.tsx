@@ -1,33 +1,28 @@
 import { Button, Card, Checkbox, Col, Form, FormInstance, Input, Row } from 'antd';
 import React, {Component} from 'react'
-import { RedirectToHome, RedirectToRegister } from '../api/router';
+import { openNotification, RedirectToHome, RedirectToRegister } from '../api/router';
 import { userLogin } from '../api/userApi';
+import { MehOutlined, SmileOutlined } from '@ant-design/icons';
 
-type loginState = {
-    resCode: string
-}
-
-class login extends Component<any, loginState> {
-    constructor(props: any){
-        super(props);
-        this.state = {
-            resCode: ""
-        }
-    }
+class login extends Component<any, any> {
 
     formRef = React.createRef<FormInstance>();
     
     onFinish = async (values: any) => {
         let res: any = await userLogin(values["username"], values["password"]);
-        this.setState({
-            resCode: res
-        });
         if(res === "OK"){
-            RedirectToHome();
+            openNotification("登录成功","欢迎来到News",<SmileOutlined style={{color:"rgb(135, 208, 104)"}}/>)
             localStorage.setItem("username", values["username"]);
+            setTimeout(()=>{
+                RedirectToHome();
+            },800)
             
+        }else if(res === "PASS_ERR"){
+            openNotification("密码错误","请确认密码是否正确",<MehOutlined style={{color:"#f4364c"}}/>)
+        }else if(res === "NO_USER"){
+            openNotification("用户不存在","请确认用户名是否正确",<MehOutlined style={{color:"#f4364c"}}/>)
         }else{
-            console.log("false");
+            openNotification("服务异常","请等待...",<MehOutlined style={{color:"#f4364c"}}/>)
         }
     };
 

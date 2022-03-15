@@ -2,9 +2,10 @@ import { Button, Card, Col, DatePicker, Form, Input, Layout, Menu, Row, Select }
 import { Content, Footer, Header } from 'antd/lib/layout/layout';
 import moment from 'moment';
 import React, { Component } from 'react'
-import { ChangeRouter, RedirectToLogin } from '../api/router';
+import { ChangeRouter, openNotification, RedirectToLogin } from '../api/router';
 import { getUser, updateUser } from '../api/userApi';
 import { FormInstance } from 'antd/es/form';
+import { MehOutlined, SmileOutlined } from '@ant-design/icons';
 type userState = {
     username: string,
     password: string,
@@ -20,7 +21,7 @@ class User extends Component<any, userState> {
         this.getUserInfo();
     }
 
-    async getUserInfo() {
+    getUserInfo = async() => {
         let userName = localStorage.getItem("username");
         if (userName) {
             let res = await getUser(userName);
@@ -46,12 +47,12 @@ class User extends Component<any, userState> {
             }
             let res = await updateUser(localStorage.getItem("username"), user);
             if (res === "OK") {
-               console.log("SUCESS")
-               localStorage.setItem("username", values["username"]);
+                openNotification("更改成功","",<SmileOutlined style={{color:"rgb(135, 208, 104)"}}/>);
+                localStorage.setItem("username", values["username"]);
             } else if(res === "USER_EXITS"){
-                console.log("USER_EXITS");
+                openNotification("用户已存在","请更换其他用户名",<MehOutlined style={{color:"#f4364c"}}/>)
             } else{
-                console.log("UPDATE FAILED")
+                openNotification("更改失败","请等待...",<MehOutlined style={{color:"#f4364c"}}/>)
             }
         } else {
             console.log("password error");
