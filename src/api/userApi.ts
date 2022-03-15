@@ -1,4 +1,4 @@
-import { get, post } from "./http";
+import { post } from "./http";
 
 /**
  * 添加用户
@@ -16,9 +16,33 @@ export const addUser: any = (userName:string, userPassword:string, userPhone:str
     });
 }
 
+/**
+ * 用户登录
+ * @param userName 
+ * @param userPassword 
+ * @returns 
+ */
 export const userLogin: any = (userName:string, userPassword:string) => {
     return post("/api/login",{
         userName : userName,
         userPassword : userPassword
+    });
+}
+
+/**
+ * 获取用户信息
+ * @param userName 
+ * @returns 
+ */
+export const getUser: any = (userName: string) => {
+    return post("api/getUser", {
+        userName: userName
+    });
+}
+
+export const updateUser: any = (userNameBefore:string, user:any) => {
+    return post("/api/updateUser",{
+        userNameBefore: userNameBefore,
+        user: user
     });
 }

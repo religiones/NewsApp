@@ -1,7 +1,7 @@
 import { Button, Card, Col, DatePicker, Form, FormInstance, Input, Row, Select } from 'antd';
 import React, { Component } from 'react'
 import { addUser } from '../api/userApi'
-import { RedirectToLogin} from '../api/router'
+import { RedirectToHome, RedirectToLogin} from '../api/router'
 
 type registerState = {
     username: string,
@@ -12,39 +12,23 @@ type registerState = {
 }
 
 class register extends Component<any, registerState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            username: "",
-            password: "",
-            password_confirm: "",
-            phone: "",
-            birth: ""
-        };
-    }
 
     formRef = React.createRef<FormInstance>();
 
     onFinish = async (values: any) => {
-        let birth = values["date-picker"].format("YYYY/MM/DD");
-        this.setState({
-            username: values["username"],
-            password: values["password"],
-            password_confirm: values["password_confirm"],
-            phone: values["phone"],
-            birth: birth
-        });
+        let birth = values["birth"].format("YYYY/MM/DD");
         if (values["password"] === values["password_confirm"]) {
-            let res = await addUser(this.state.username,this.state.password,this.state.phone,this.state.birth);
+            let res = await addUser(values["username"],values["password"],values["phone"],birth);
             if (res === "OK") {
-                window.location.href = "http://localhost:3000/";
+               RedirectToHome();
+               localStorage.setItem("username", values["username"]);
             } else {
                 console.log("register failed");
             }
         } else {
             console.log("password error");
         }
-    };
+    }
 
     render() {
     
@@ -83,7 +67,7 @@ class register extends Component<any, registerState> {
                                 <Form.Item name="phone" label="请输入电话" rules={[{len:11, message: "电话号码不合法!"}]}>
                                     <Input addonBefore={prefixSelector} style={{ width: '100%' }} placeholder='再次输入电话'/>
                                 </Form.Item>
-                                <Form.Item name="date-picker" label="生日" >
+                                <Form.Item name="birth" label="生日" >
                                     <DatePicker format={"YYYY/MM/DD"} />
                                 </Form.Item>
                                 <Form.Item wrapperCol={{ offset: 4, span: 16 }}>

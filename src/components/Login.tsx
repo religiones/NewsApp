@@ -24,18 +24,12 @@ class login extends Component<any, loginState> {
         });
         if(res === "OK"){
             RedirectToHome();
+            localStorage.setItem("username", values["username"]);
+            
         }else{
             console.log("false");
         }
     };
-
-    redirectToRegister = ()=>{
-        window.location.href= "http://localhost:3000/register";
-    }
-
-    redirectToHome = ()=>{
-        window.location.href= "http://localhost:3000/";
-    }
 
     render(){
         return(

@@ -54,7 +54,7 @@ class newsPublish extends Component<any, newsPublisState> {
                     <Header className="header" style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
                         <Row>
                             <Col span={6}>
-                                <div className="logo">Logo</div>
+                                <div className="logo">News</div>
                             </Col>
                             <Col span={6} offset={12}>
                                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['pulish']} onClick={(item)=>{
@@ -77,7 +77,7 @@ class newsPublish extends Component<any, newsPublisState> {
                                                 <Input placeholder='请输入新闻标题'/>
                                             </Form.Item>
                                             <Form.Item label="新闻来源"  name="newsSource" rules={[{required: true, message: "标题不能为空!"}]}>
-                                                <Input placeholder='请输入新闻标题'/>
+                                                <Input placeholder='请输入新闻来源'/>
                                             </Form.Item>
                                             <Form.Item label="新闻内容"  name="newsContent" rules={[{required: true, message: "内容不能为空!"}]}>
                                                 <TextArea showCount maxLength={300} style={{height: 300}} placeholder='请输入新闻内容'/>
